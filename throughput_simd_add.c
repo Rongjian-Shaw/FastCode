@@ -11,48 +11,43 @@ static __inline__ unsigned long long rdtsc(void) {
   return ( (unsigned long long)lo)|( ((unsigned long long)hi)<<32 );
 }
 
-#define SIMDFMA1(dest, src1, src2)     \
-   __asm__ __volatile__(           \
-       "vmulpd %[rsrc1], %[rsrc1], %[rsrc2] \n vaddpd %[rdest], %[rsrc1], %[rdest]"   \
-   : [rdest] "+x"(dest) \
-   : [rsrc1] "x"(src1)  \
-   , [rsrc2] "x"(src2));
+#define SIMDADD1(dest, src) INSTRUCTION(dest, src)
 
-#define SIMDFMA10(dest, src1, src2) \
-SIMDFMA1(dest, src1, src2) \
-SIMDFMA1(dest, src1, src2) \
-SIMDFMA1(dest, src1, src2) \
-SIMDFMA1(dest, src1, src2) \
-SIMDFMA1(dest, src1, src2) \
-SIMDFMA1(dest, src1, src2) \
-SIMDFMA1(dest, src1, src2) \
-SIMDFMA1(dest, src1, src2) \
-SIMDFMA1(dest, src1, src2) \
-SIMDFMA1(dest, src1, src2) \
+#define SIMDADD10(dest, src) \
+SIMDADD1(dest, src) \
+SIMDADD1(dest, src) \
+SIMDADD1(dest, src) \
+SIMDADD1(dest, src) \
+SIMDADD1(dest, src) \
+SIMDADD1(dest, src) \
+SIMDADD1(dest, src) \
+SIMDADD1(dest, src) \
+SIMDADD1(dest, src) \
+SIMDADD1(dest, src) \
 
-#define SIMDFMA100(dest, src1, src2) \
-SIMDFMA10(dest, src1, src2) \
-SIMDFMA10(dest, src1, src2) \
-SIMDFMA10(dest, src1, src2) \
-SIMDFMA10(dest, src1, src2) \
-SIMDFMA10(dest, src1, src2) \
-SIMDFMA10(dest, src1, src2) \
-SIMDFMA10(dest, src1, src2) \
-SIMDFMA10(dest, src1, src2) \
-SIMDFMA10(dest, src1, src2) \
-SIMDFMA10(dest, src1, src2) \
+#define SIMDADD100(dest, src) \
+SIMDADD10(dest, src) \
+SIMDADD10(dest, src) \
+SIMDADD10(dest, src) \
+SIMDADD10(dest, src) \
+SIMDADD10(dest, src) \
+SIMDADD10(dest, src) \
+SIMDADD10(dest, src) \
+SIMDADD10(dest, src) \
+SIMDADD10(dest, src) \
+SIMDADD10(dest, src) \
 
-#define SIMDFMA1000(dest, src1, src2) \
-SIMDFMA100(dest, src1, src2) \
-SIMDFMA100(dest, src1, src2) \
-SIMDFMA100(dest, src1, src2) \
-SIMDFMA100(dest, src1, src2) \
-SIMDFMA100(dest, src1, src2) \
-SIMDFMA100(dest, src1, src2) \
-SIMDFMA100(dest, src1, src2) \
-SIMDFMA100(dest, src1, src2) \
-SIMDFMA100(dest, src1, src2) \
-SIMDFMA100(dest, src1, src2) \
+#define SIMDADD1000(dest, src) \
+SIMDADD100(dest, src) \
+SIMDADD100(dest, src) \
+SIMDADD100(dest, src) \
+SIMDADD100(dest, src) \
+SIMDADD100(dest, src) \
+SIMDADD100(dest, src) \
+SIMDADD100(dest, src) \
+SIMDADD100(dest, src) \
+SIMDADD100(dest, src) \
+SIMDADD100(dest, src) \
 
 
 //macro intrinsics for selected instruction
@@ -64,13 +59,20 @@ SIMDFMA100(dest, src1, src2) \
    : [rsrc1] "x"(src)  \
    , [rsrc2] "x"(dest));
 
+// regular register   x: SIMD register
+// #define INSTRUCTION(dest, src)     \
+//    __asm__ __volatile__(           \
+//        "xor %[rsrc], %[rdest]\n"   \
+//    : [rdest] "+r"(dest)            \
+//    : [rsrc] "r"(src));   
+
 //replace these with appropriate frequencies on your machine
 //used to scale timing as rdtsc measures clock cycle at base frequency.
 #define MAX_FREQ   3.2
 #define BASE_FREQ  2.4
 
 //number of instructions in a dependent chain
-#define NUM_INST    1.0
+#define NUM_INST    1000.0
 
 
 
@@ -90,10 +92,13 @@ void latency(int seed, int constant, int runs) {
     // You will need to replace INSTRUCTION with a chain of dependent instructions
     float __attribute__((aligned(16))) xf4[4] = {xf, xf, xf, xf};
     float __attribute__((aligned(16))) af4[4] = {af, af, af, af};
-    // __m256d xf128 = _mm_load_ps(xf4);
-    // __m256d af128 = _mm_load_ps(af4);
+    float __attribute__((aligned(16))) bf4[4] = {af, af, af, af};
+    float __attribute__((aligned(16))) cf4[4] = {af, af, af, af};
+    float __attribute__((aligned(16))) df4[4] = {af, af, af, af};
+    __m128 xf128 = _mm_load_ps(xf4);
+    __m128 af128 = _mm_load_ps(af4);
     t0 = rdtsc();
-    SIMDFMA1(xf4, af4, af4)
+    SIMDADD1000(xf128, af128)
     // INSTRUCTION(xf128, af128);  
     // _mm_add_ps(xf128,af128);
     
@@ -102,7 +107,7 @@ void latency(int seed, int constant, int runs) {
     sum += (t1 - t0);
   }
   printf("Verify: %llu\n", sum);  // required to prevent the compiler from optimizing it out
-  printf("Latency: %lf\n", MAX_FREQ/BASE_FREQ * sum / (NUM_INST * runs));   //find the average latency over multiple runs
+  printf("Throughput: %lf\n", MAX_FREQ/BASE_FREQ * sum / (NUM_INST * runs));   //find the average latency over multiple runs
 }
 
 int main(int argc, char **argv) {

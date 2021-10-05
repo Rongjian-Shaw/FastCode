@@ -11,55 +11,57 @@ static __inline__ unsigned long long rdtsc(void) {
   return ( (unsigned long long)lo)|( ((unsigned long long)hi)<<32 );
 }
 
-#define SIMDFMA1(dest, src1, src2)     \
-   __asm__ __volatile__(           \
-       "vmulpd %[rsrc1], %[rsrc1], %[rsrc2] \n vaddpd %[rdest], %[rsrc1], %[rdest]"   \
-   : [rdest] "+x"(dest) \
-   : [rsrc1] "x"(src1)  \
-   , [rsrc2] "x"(src2));
+// #define SIMDFMA1(dest, src1, src2)     \
+//    __asm__ __volatile__(           \
+//        "vmulpd %[rsrc1], %[rsrc1], %[rsrc2] \n vaddpd %[rdest], %[rsrc1], %[rdest]"   \
+//    : [rdest] "+x"(dest) \
+//    : [rsrc1] "x"(src1)  \
+//    , [rsrc2] "x"(src2));
 
-#define SIMDFMA10(dest, src1, src2) \
-SIMDFMA1(dest, src1, src2) \
-SIMDFMA1(dest, src1, src2) \
-SIMDFMA1(dest, src1, src2) \
-SIMDFMA1(dest, src1, src2) \
-SIMDFMA1(dest, src1, src2) \
-SIMDFMA1(dest, src1, src2) \
-SIMDFMA1(dest, src1, src2) \
-SIMDFMA1(dest, src1, src2) \
-SIMDFMA1(dest, src1, src2) \
-SIMDFMA1(dest, src1, src2) \
+#define SIMDFMA1 "vmulpd %[rsrc1], %[rsrc1], %[rsrc2] \n vaddpd %[rdest], %[rsrc1], %[rdest]\n"
 
-#define SIMDFMA100(dest, src1, src2) \
-SIMDFMA10(dest, src1, src2) \
-SIMDFMA10(dest, src1, src2) \
-SIMDFMA10(dest, src1, src2) \
-SIMDFMA10(dest, src1, src2) \
-SIMDFMA10(dest, src1, src2) \
-SIMDFMA10(dest, src1, src2) \
-SIMDFMA10(dest, src1, src2) \
-SIMDFMA10(dest, src1, src2) \
-SIMDFMA10(dest, src1, src2) \
-SIMDFMA10(dest, src1, src2) \
+#define SIMDFMA10 \
+SIMDFMA1 \
+SIMDFMA1 \
+SIMDFMA1 \
+SIMDFMA1 \
+SIMDFMA1 \
+SIMDFMA1 \
+SIMDFMA1 \
+SIMDFMA1 \
+SIMDFMA1 \
+SIMDFMA1 \
 
-#define SIMDFMA1000(dest, src1, src2) \
-SIMDFMA100(dest, src1, src2) \
-SIMDFMA100(dest, src1, src2) \
-SIMDFMA100(dest, src1, src2) \
-SIMDFMA100(dest, src1, src2) \
-SIMDFMA100(dest, src1, src2) \
-SIMDFMA100(dest, src1, src2) \
-SIMDFMA100(dest, src1, src2) \
-SIMDFMA100(dest, src1, src2) \
-SIMDFMA100(dest, src1, src2) \
-SIMDFMA100(dest, src1, src2) \
+#define SIMDFMA100 \
+SIMDFMA10 \
+SIMDFMA10 \
+SIMDFMA10 \
+SIMDFMA10 \
+SIMDFMA10 \
+SIMDFMA10 \
+SIMDFMA10 \
+SIMDFMA10 \
+SIMDFMA10 \
+SIMDFMA10 \
+
+#define SIMDFMA1000 \
+SIMDFMA100 \
+SIMDFMA100 \
+SIMDFMA100 \
+SIMDFMA100 \
+SIMDFMA100 \
+SIMDFMA100 \
+SIMDFMA100 \
+SIMDFMA100 \
+SIMDFMA100 \
+SIMDFMA100 \
 
 
 //macro intrinsics for selected instruction
 //replace the asm with the appropriate instruction 
 #define INSTRUCTION(dest, src)     \
    __asm__ __volatile__(           \
-       "vaddpd %[rdest], %[rsrc1], %[rdest] \n"   \
+       SIMDFMA1000   \
    : [rdest] "+x"(dest) \
    : [rsrc1] "x"(src)  \
    , [rsrc2] "x"(dest));
@@ -70,7 +72,7 @@ SIMDFMA100(dest, src1, src2) \
 #define BASE_FREQ  2.4
 
 //number of instructions in a dependent chain
-#define NUM_INST    1.0
+#define NUM_INST    1000.0
 
 
 
@@ -93,16 +95,13 @@ void latency(int seed, int constant, int runs) {
     // __m256d xf128 = _mm_load_ps(xf4);
     // __m256d af128 = _mm_load_ps(af4);
     t0 = rdtsc();
-    SIMDFMA1(xf4, af4, af4)
-    // INSTRUCTION(xf128, af128);  
-    // _mm_add_ps(xf128,af128);
-    
+    INSTRUCTION(xf4, af4)
     t1 = rdtsc();
 
     sum += (t1 - t0);
   }
   printf("Verify: %llu\n", sum);  // required to prevent the compiler from optimizing it out
-  printf("Latency: %lf\n", MAX_FREQ/BASE_FREQ * sum / (NUM_INST * runs));   //find the average latency over multiple runs
+  printf("Throughput: %lf\n", MAX_FREQ/BASE_FREQ * sum / (NUM_INST * runs));   //find the average latency over multiple runs
 }
 
 int main(int argc, char **argv) {

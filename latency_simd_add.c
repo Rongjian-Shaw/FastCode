@@ -67,8 +67,8 @@ SIMDADD100(dest, src) \
 
 //replace these with appropriate frequencies on your machine
 //used to scale timing as rdtsc measures clock cycle at base frequency.
-#define MAX_FREQ   3.0
-#define BASE_FREQ  2.3
+#define MAX_FREQ   3.2
+#define BASE_FREQ  2.4
 
 //number of instructions in a dependent chain
 #define NUM_INST    1.0
