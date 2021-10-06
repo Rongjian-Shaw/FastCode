@@ -11,43 +11,61 @@ static __inline__ unsigned long long rdtsc(void) {
   return ( (unsigned long long)lo)|( ((unsigned long long)hi)<<32 );
 }
 
-#define SIMDADD1(dest, src) INSTRUCTION(dest, src)
+#define SIMDADD1(dest, src)     \
+   __asm__ __volatile__(           \
+       "vaddpd %[rdest], %[rsrc1], %[rdest] \n"   \
+   : [rdest] "+x"(dest) \
+   : [rsrc1] "x"(src)  \
+   , [rsrc2] "x"(dest));
 
-#define SIMDADD10(dest, src) \
-SIMDADD1(dest, src) \
-SIMDADD1(dest, src) \
-SIMDADD1(dest, src) \
-SIMDADD1(dest, src) \
-SIMDADD1(dest, src) \
-SIMDADD1(dest, src) \
-SIMDADD1(dest, src) \
-SIMDADD1(dest, src) \
-SIMDADD1(dest, src) \
-SIMDADD1(dest, src) \
+#define INTERLEAVES(destArr, srcArr) \
+SIMDADD1(destArr[0], srcArr[0]) \
+SIMDADD1(destArr[1], srcArr[1]) \
+// SIMDADD1(destArr[2], srcArr[2]) \
+// SIMDADD1(destArr[3], srcArr[3]) \
+// SIMDADD1(destArr[4], srcArr[4]) \
+// SIMDADD1(destArr[5], srcArr[5]) \
+// SIMDADD1(destArr[6], srcArr[6]) \
+// SIMDADD1(destArr[7], srcArr[7]) \
+// SIMDADD1(destArr[8], srcArr[8]) 
 
-#define SIMDADD100(dest, src) \
-SIMDADD10(dest, src) \
-SIMDADD10(dest, src) \
-SIMDADD10(dest, src) \
-SIMDADD10(dest, src) \
-SIMDADD10(dest, src) \
-SIMDADD10(dest, src) \
-SIMDADD10(dest, src) \
-SIMDADD10(dest, src) \
-SIMDADD10(dest, src) \
-SIMDADD10(dest, src) \
 
-#define SIMDADD1000(dest, src) \
-SIMDADD100(dest, src) \
-SIMDADD100(dest, src) \
-SIMDADD100(dest, src) \
-SIMDADD100(dest, src) \
-SIMDADD100(dest, src) \
-SIMDADD100(dest, src) \
-SIMDADD100(dest, src) \
-SIMDADD100(dest, src) \
-SIMDADD100(dest, src) \
-SIMDADD100(dest, src) \
+
+#define INTERLEAVES10(dest, src) \
+INTERLEAVES(dest, src) \
+INTERLEAVES(dest, src) \
+INTERLEAVES(dest, src) \
+INTERLEAVES(dest, src) \
+INTERLEAVES(dest, src) \
+INTERLEAVES(dest, src) \
+INTERLEAVES(dest, src) \
+INTERLEAVES(dest, src) \
+INTERLEAVES(dest, src) \
+INTERLEAVES(dest, src) \
+
+#define INTERLEAVES100(dest, src) \
+INTERLEAVES10(dest, src) \
+INTERLEAVES10(dest, src) \
+INTERLEAVES10(dest, src) \
+INTERLEAVES10(dest, src) \
+INTERLEAVES10(dest, src) \
+INTERLEAVES10(dest, src) \
+INTERLEAVES10(dest, src) \
+INTERLEAVES10(dest, src) \
+INTERLEAVES10(dest, src) \
+INTERLEAVES10(dest, src) \
+
+#define INTERLEAVES1000(dest, src) \
+INTERLEAVES100(dest, src) \
+INTERLEAVES100(dest, src) \
+INTERLEAVES100(dest, src) \
+INTERLEAVES100(dest, src) \
+INTERLEAVES100(dest, src) \
+INTERLEAVES100(dest, src) \
+INTERLEAVES100(dest, src) \
+INTERLEAVES100(dest, src) \
+INTERLEAVES100(dest, src) \
+INTERLEAVES100(dest, src) \
 
 
 //macro intrinsics for selected instruction
@@ -83,31 +101,17 @@ void latency(int seed, int constant, int runs) {
 
   unsigned long long sum = 0;
 
-  for(int i = 0; i != runs; ++i) {
-    x = seed;
-    float xf = (float)x;
-    float af = (float)a;
-
-    //time instruction  
-    // You will need to replace INSTRUCTION with a chain of dependent instructions
-    float __attribute__((aligned(16))) xf4[4] = {xf, xf, xf, xf};
-    float __attribute__((aligned(16))) af4[4] = {af, af, af, af};
-    float __attribute__((aligned(16))) bf4[4] = {af, af, af, af};
-    float __attribute__((aligned(16))) cf4[4] = {af, af, af, af};
-    float __attribute__((aligned(16))) df4[4] = {af, af, af, af};
-    __m128 xf128 = _mm_load_ps(xf4);
-    __m128 af128 = _mm_load_ps(af4);
+  for(int i = 1; i != runs; ++i) {
+    float dest[10000][4] = {x*1.0};
+    float src[10000][4] = {a*1.0};
     t0 = rdtsc();
-    SIMDADD1000(xf128, af128)
-    // INSTRUCTION(xf128, af128);  
-    // _mm_add_ps(xf128,af128);
-    
+    INTERLEAVES1000(dest, src)
     t1 = rdtsc();
-
     sum += (t1 - t0);
   }
   printf("Verify: %llu\n", sum);  // required to prevent the compiler from optimizing it out
-  printf("Throughput: %lf\n", MAX_FREQ/BASE_FREQ * sum / (NUM_INST * runs));   //find the average latency over multiple runs
+  printf("Performance: %lf\n", MAX_FREQ/BASE_FREQ * sum / (NUM_INST * runs));   //find the average latency over multiple runs
+  printf("Throughput: %lf\n", MAX_FREQ/BASE_FREQ * ((NUM_INST * runs) * 2) / sum);
 }
 
 int main(int argc, char **argv) {
@@ -120,3 +124,5 @@ int main(int argc, char **argv) {
  
   return 0;
 }
+// gcc -Wall -O1 throughput_simd_add.c -o throughput_simd_add.x -std=c99
+// ./throughput_simd_add.x 1000

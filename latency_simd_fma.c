@@ -13,10 +13,9 @@ static __inline__ unsigned long long rdtsc(void) {
 
 #define SIMDFMA1(dest, src1, src2)     \
    __asm__ __volatile__(           \
-       "vmulpd %[rsrc1], %[rsrc1], %[rsrc2] \n vaddpd %[rdest], %[rsrc1], %[rdest]"   \
-   : [rdest] "+x"(dest) \
-   : [rsrc1] "x"(src1)  \
-   , [rsrc2] "x"(src2));
+    "vfmadd231pd %[rdest], %[rsrc1], %[rsrc2]\n"\
+   : [rdest] "+x"(dest)                         \
+   : [rsrc1] "x"(src1), [rsrc2] "x"(src2), [rsrc3] "x"(dest));
 
 #define SIMDFMA10(dest, src1, src2) \
 SIMDFMA1(dest, src1, src2) \
@@ -54,15 +53,12 @@ SIMDFMA100(dest, src1, src2) \
 SIMDFMA100(dest, src1, src2) \
 SIMDFMA100(dest, src1, src2) \
 
-
-//macro intrinsics for selected instruction
-//replace the asm with the appropriate instruction 
-#define INSTRUCTION(dest, src)     \
-   __asm__ __volatile__(           \
-       "vaddpd %[rdest], %[rsrc1], %[rdest] \n"   \
-   : [rdest] "+x"(dest) \
-   : [rsrc1] "x"(src)  \
-   , [rsrc2] "x"(dest));
+// regular register   x: SIMD register
+// #define INSTRUCTION(dest, src)     \
+//    __asm__ __volatile__(           \
+//        "xor %[rsrc], %[rdest]\n"   \
+//    : [rdest] "+r"(dest)            \
+//    : [rsrc] "r"(src));   
 
 //replace these with appropriate frequencies on your machine
 //used to scale timing as rdtsc measures clock cycle at base frequency.
@@ -70,7 +66,7 @@ SIMDFMA100(dest, src1, src2) \
 #define BASE_FREQ  2.4
 
 //number of instructions in a dependent chain
-#define NUM_INST    1.0
+#define NUM_INST    1000.0
 
 
 
@@ -90,10 +86,8 @@ void latency(int seed, int constant, int runs) {
     // You will need to replace INSTRUCTION with a chain of dependent instructions
     float __attribute__((aligned(16))) xf4[4] = {xf, xf, xf, xf};
     float __attribute__((aligned(16))) af4[4] = {af, af, af, af};
-    // __m256d xf128 = _mm_load_ps(xf4);
-    // __m256d af128 = _mm_load_ps(af4);
     t0 = rdtsc();
-    SIMDFMA1(xf4, af4, af4)
+    SIMDFMA1000(xf4, af4, af4)
     // INSTRUCTION(xf128, af128);  
     // _mm_add_ps(xf128,af128);
     

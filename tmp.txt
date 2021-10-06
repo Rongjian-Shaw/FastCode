@@ -1,0 +1,1287 @@
+
+latency_simd_fma.x:     file format elf64-x86-64
+
+
+Disassembly of section .init:
+
+0000000000400450 <_init>:
+  400450:	48 83 ec 08          	sub    $0x8,%rsp
+  400454:	48 8b 05 9d 1b 20 00 	mov    0x201b9d(%rip),%rax        # 601ff8 <__gmon_start__>
+  40045b:	48 85 c0             	test   %rax,%rax
+  40045e:	74 05                	je     400465 <_init+0x15>
+  400460:	e8 3b 00 00 00       	callq  4004a0 <__gmon_start__@plt>
+  400465:	48 83 c4 08          	add    $0x8,%rsp
+  400469:	c3                   	retq   
+
+Disassembly of section .plt:
+
+0000000000400470 <.plt>:
+  400470:	ff 35 92 1b 20 00    	pushq  0x201b92(%rip)        # 602008 <_GLOBAL_OFFSET_TABLE_+0x8>
+  400476:	ff 25 94 1b 20 00    	jmpq   *0x201b94(%rip)        # 602010 <_GLOBAL_OFFSET_TABLE_+0x10>
+  40047c:	0f 1f 40 00          	nopl   0x0(%rax)
+
+0000000000400480 <printf@plt>:
+  400480:	ff 25 92 1b 20 00    	jmpq   *0x201b92(%rip)        # 602018 <printf@GLIBC_2.2.5>
+  400486:	68 00 00 00 00       	pushq  $0x0
+  40048b:	e9 e0 ff ff ff       	jmpq   400470 <.plt>
+
+0000000000400490 <__libc_start_main@plt>:
+  400490:	ff 25 8a 1b 20 00    	jmpq   *0x201b8a(%rip)        # 602020 <__libc_start_main@GLIBC_2.2.5>
+  400496:	68 01 00 00 00       	pushq  $0x1
+  40049b:	e9 d0 ff ff ff       	jmpq   400470 <.plt>
+
+00000000004004a0 <__gmon_start__@plt>:
+  4004a0:	ff 25 82 1b 20 00    	jmpq   *0x201b82(%rip)        # 602028 <__gmon_start__>
+  4004a6:	68 02 00 00 00       	pushq  $0x2
+  4004ab:	e9 c0 ff ff ff       	jmpq   400470 <.plt>
+
+00000000004004b0 <strtol@plt>:
+  4004b0:	ff 25 7a 1b 20 00    	jmpq   *0x201b7a(%rip)        # 602030 <strtol@GLIBC_2.2.5>
+  4004b6:	68 03 00 00 00       	pushq  $0x3
+  4004bb:	e9 b0 ff ff ff       	jmpq   400470 <.plt>
+
+00000000004004c0 <rand@plt>:
+  4004c0:	ff 25 72 1b 20 00    	jmpq   *0x201b72(%rip)        # 602038 <rand@GLIBC_2.2.5>
+  4004c6:	68 04 00 00 00       	pushq  $0x4
+  4004cb:	e9 a0 ff ff ff       	jmpq   400470 <.plt>
+
+Disassembly of section .text:
+
+00000000004004d0 <_start>:
+  4004d0:	31 ed                	xor    %ebp,%ebp
+  4004d2:	49 89 d1             	mov    %rdx,%r9
+  4004d5:	5e                   	pop    %rsi
+  4004d6:	48 89 e2             	mov    %rsp,%rdx
+  4004d9:	48 83 e4 f0          	and    $0xfffffffffffffff0,%rsp
+  4004dd:	50                   	push   %rax
+  4004de:	54                   	push   %rsp
+  4004df:	49 c7 c0 30 1b 40 00 	mov    $0x401b30,%r8
+  4004e6:	48 c7 c1 c0 1a 40 00 	mov    $0x401ac0,%rcx
+  4004ed:	48 c7 c7 5c 1a 40 00 	mov    $0x401a5c,%rdi
+  4004f4:	e8 97 ff ff ff       	callq  400490 <__libc_start_main@plt>
+  4004f9:	f4                   	hlt    
+  4004fa:	66 0f 1f 44 00 00    	nopw   0x0(%rax,%rax,1)
+
+0000000000400500 <deregister_tm_clones>:
+  400500:	b8 4f 20 60 00       	mov    $0x60204f,%eax
+  400505:	55                   	push   %rbp
+  400506:	48 2d 48 20 60 00    	sub    $0x602048,%rax
+  40050c:	48 83 f8 0e          	cmp    $0xe,%rax
+  400510:	48 89 e5             	mov    %rsp,%rbp
+  400513:	77 02                	ja     400517 <deregister_tm_clones+0x17>
+  400515:	5d                   	pop    %rbp
+  400516:	c3                   	retq   
+  400517:	b8 00 00 00 00       	mov    $0x0,%eax
+  40051c:	48 85 c0             	test   %rax,%rax
+  40051f:	74 f4                	je     400515 <deregister_tm_clones+0x15>
+  400521:	5d                   	pop    %rbp
+  400522:	bf 48 20 60 00       	mov    $0x602048,%edi
+  400527:	ff e0                	jmpq   *%rax
+  400529:	0f 1f 80 00 00 00 00 	nopl   0x0(%rax)
+
+0000000000400530 <register_tm_clones>:
+  400530:	b8 48 20 60 00       	mov    $0x602048,%eax
+  400535:	55                   	push   %rbp
+  400536:	48 2d 48 20 60 00    	sub    $0x602048,%rax
+  40053c:	48 c1 f8 03          	sar    $0x3,%rax
+  400540:	48 89 e5             	mov    %rsp,%rbp
+  400543:	48 89 c2             	mov    %rax,%rdx
+  400546:	48 c1 ea 3f          	shr    $0x3f,%rdx
+  40054a:	48 01 d0             	add    %rdx,%rax
+  40054d:	48 d1 f8             	sar    %rax
+  400550:	75 02                	jne    400554 <register_tm_clones+0x24>
+  400552:	5d                   	pop    %rbp
+  400553:	c3                   	retq   
+  400554:	ba 00 00 00 00       	mov    $0x0,%edx
+  400559:	48 85 d2             	test   %rdx,%rdx
+  40055c:	74 f4                	je     400552 <register_tm_clones+0x22>
+  40055e:	5d                   	pop    %rbp
+  40055f:	48 89 c6             	mov    %rax,%rsi
+  400562:	bf 48 20 60 00       	mov    $0x602048,%edi
+  400567:	ff e2                	jmpq   *%rdx
+  400569:	0f 1f 80 00 00 00 00 	nopl   0x0(%rax)
+
+0000000000400570 <__do_global_dtors_aux>:
+  400570:	80 3d cd 1a 20 00 00 	cmpb   $0x0,0x201acd(%rip)        # 602044 <_edata>
+  400577:	75 11                	jne    40058a <__do_global_dtors_aux+0x1a>
+  400579:	55                   	push   %rbp
+  40057a:	48 89 e5             	mov    %rsp,%rbp
+  40057d:	e8 7e ff ff ff       	callq  400500 <deregister_tm_clones>
+  400582:	5d                   	pop    %rbp
+  400583:	c6 05 ba 1a 20 00 01 	movb   $0x1,0x201aba(%rip)        # 602044 <_edata>
+  40058a:	f3 c3                	repz retq 
+  40058c:	0f 1f 40 00          	nopl   0x0(%rax)
+
+0000000000400590 <frame_dummy>:
+  400590:	48 83 3d 88 18 20 00 	cmpq   $0x0,0x201888(%rip)        # 601e20 <__JCR_END__>
+  400597:	00 
+  400598:	74 1e                	je     4005b8 <frame_dummy+0x28>
+  40059a:	b8 00 00 00 00       	mov    $0x0,%eax
+  40059f:	48 85 c0             	test   %rax,%rax
+  4005a2:	74 14                	je     4005b8 <frame_dummy+0x28>
+  4005a4:	55                   	push   %rbp
+  4005a5:	bf 20 1e 60 00       	mov    $0x601e20,%edi
+  4005aa:	48 89 e5             	mov    %rsp,%rbp
+  4005ad:	ff d0                	callq  *%rax
+  4005af:	5d                   	pop    %rbp
+  4005b0:	e9 7b ff ff ff       	jmpq   400530 <register_tm_clones>
+  4005b5:	0f 1f 00             	nopl   (%rax)
+  4005b8:	e9 73 ff ff ff       	jmpq   400530 <register_tm_clones>
+
+00000000004005bd <latency>:
+  4005bd:	55                   	push   %rbp
+  4005be:	53                   	push   %rbx
+  4005bf:	48 83 ec 38          	sub    $0x38,%rsp
+  4005c3:	89 d5                	mov    %edx,%ebp
+  4005c5:	85 d2                	test   %edx,%edx
+  4005c7:	0f 84 29 14 00 00    	je     4019f6 <latency+0x1439>
+  4005cd:	b9 00 00 00 00       	mov    $0x0,%ecx
+  4005d2:	bb 00 00 00 00       	mov    $0x0,%ebx
+  4005d7:	89 ff                	mov    %edi,%edi
+  4005d9:	f3 48 0f 2a df       	cvtsi2ss %rdi,%xmm3
+  4005de:	89 f6                	mov    %esi,%esi
+  4005e0:	f3 48 0f 2a d6       	cvtsi2ss %rsi,%xmm2
+  4005e5:	48 8d 44 24 20       	lea    0x20(%rsp),%rax
+  4005ea:	48 89 44 24 08       	mov    %rax,0x8(%rsp)
+  4005ef:	f3 0f 7e 44 24 08    	movq   0x8(%rsp),%xmm0
+  4005f5:	48 8d 44 24 10       	lea    0x10(%rsp),%rax
+  4005fa:	48 89 44 24 08       	mov    %rax,0x8(%rsp)
+  4005ff:	f3 0f 7e 4c 24 08    	movq   0x8(%rsp),%xmm1
+  400605:	f3 0f 11 5c 24 10    	movss  %xmm3,0x10(%rsp)
+  40060b:	f3 0f 11 5c 24 14    	movss  %xmm3,0x14(%rsp)
+  400611:	f3 0f 11 5c 24 18    	movss  %xmm3,0x18(%rsp)
+  400617:	f3 0f 11 5c 24 1c    	movss  %xmm3,0x1c(%rsp)
+  40061d:	f3 0f 11 54 24 20    	movss  %xmm2,0x20(%rsp)
+  400623:	f3 0f 11 54 24 24    	movss  %xmm2,0x24(%rsp)
+  400629:	f3 0f 11 54 24 28    	movss  %xmm2,0x28(%rsp)
+  40062f:	f3 0f 11 54 24 2c    	movss  %xmm2,0x2c(%rsp)
+  400635:	0f 31                	rdtsc  
+  400637:	89 d7                	mov    %edx,%edi
+  400639:	89 c6                	mov    %eax,%esi
+  40063b:	66 0f 6f 64 24 10    	movdqa 0x10(%rsp),%xmm4
+  400641:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400646:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  40064b:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400650:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400655:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  40065a:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  40065f:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400664:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400669:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  40066e:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400673:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400678:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  40067d:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400682:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400687:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  40068c:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400691:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400696:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  40069b:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4006a0:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4006a5:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4006aa:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4006af:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4006b4:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4006b9:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4006be:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4006c3:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4006c8:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4006cd:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4006d2:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4006d7:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4006dc:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4006e1:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4006e6:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4006eb:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4006f0:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4006f5:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4006fa:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4006ff:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400704:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400709:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  40070e:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400713:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400718:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  40071d:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400722:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400727:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  40072c:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400731:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400736:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  40073b:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400740:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400745:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  40074a:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  40074f:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400754:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400759:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  40075e:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400763:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400768:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  40076d:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400772:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400777:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  40077c:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400781:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400786:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  40078b:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400790:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400795:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  40079a:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  40079f:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4007a4:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4007a9:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4007ae:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4007b3:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4007b8:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4007bd:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4007c2:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4007c7:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4007cc:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4007d1:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4007d6:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4007db:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4007e0:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4007e5:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4007ea:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4007ef:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4007f4:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4007f9:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4007fe:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400803:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400808:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  40080d:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400812:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400817:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  40081c:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400821:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400826:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  40082b:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400830:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400835:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  40083a:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  40083f:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400844:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400849:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  40084e:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400853:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400858:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  40085d:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400862:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400867:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  40086c:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400871:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400876:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  40087b:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400880:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400885:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  40088a:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  40088f:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400894:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400899:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  40089e:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4008a3:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4008a8:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4008ad:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4008b2:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4008b7:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4008bc:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4008c1:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4008c6:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4008cb:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4008d0:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4008d5:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4008da:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4008df:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4008e4:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4008e9:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4008ee:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4008f3:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4008f8:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4008fd:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400902:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400907:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  40090c:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400911:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400916:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  40091b:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400920:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400925:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  40092a:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  40092f:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400934:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400939:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  40093e:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400943:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400948:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  40094d:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400952:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400957:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  40095c:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400961:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400966:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  40096b:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400970:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400975:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  40097a:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  40097f:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400984:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400989:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  40098e:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400993:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400998:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  40099d:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4009a2:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4009a7:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4009ac:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4009b1:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4009b6:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4009bb:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4009c0:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4009c5:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4009ca:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4009cf:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4009d4:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4009d9:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4009de:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4009e3:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4009e8:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4009ed:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4009f2:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4009f7:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4009fc:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400a01:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400a06:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400a0b:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400a10:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400a15:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400a1a:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400a1f:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400a24:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400a29:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400a2e:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400a33:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400a38:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400a3d:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400a42:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400a47:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400a4c:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400a51:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400a56:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400a5b:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400a60:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400a65:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400a6a:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400a6f:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400a74:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400a79:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400a7e:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400a83:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400a88:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400a8d:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400a92:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400a97:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400a9c:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400aa1:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400aa6:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400aab:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400ab0:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400ab5:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400aba:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400abf:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400ac4:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400ac9:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400ace:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400ad3:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400ad8:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400add:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400ae2:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400ae7:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400aec:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400af1:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400af6:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400afb:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400b00:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400b05:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400b0a:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400b0f:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400b14:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400b19:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400b1e:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400b23:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400b28:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400b2d:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400b32:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400b37:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400b3c:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400b41:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400b46:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400b4b:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400b50:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400b55:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400b5a:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400b5f:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400b64:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400b69:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400b6e:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400b73:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400b78:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400b7d:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400b82:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400b87:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400b8c:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400b91:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400b96:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400b9b:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400ba0:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400ba5:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400baa:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400baf:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400bb4:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400bb9:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400bbe:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400bc3:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400bc8:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400bcd:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400bd2:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400bd7:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400bdc:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400be1:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400be6:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400beb:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400bf0:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400bf5:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400bfa:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400bff:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400c04:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400c09:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400c0e:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400c13:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400c18:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400c1d:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400c22:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400c27:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400c2c:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400c31:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400c36:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400c3b:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400c40:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400c45:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400c4a:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400c4f:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400c54:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400c59:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400c5e:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400c63:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400c68:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400c6d:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400c72:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400c77:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400c7c:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400c81:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400c86:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400c8b:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400c90:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400c95:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400c9a:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400c9f:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400ca4:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400ca9:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400cae:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400cb3:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400cb8:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400cbd:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400cc2:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400cc7:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400ccc:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400cd1:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400cd6:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400cdb:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400ce0:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400ce5:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400cea:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400cef:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400cf4:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400cf9:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400cfe:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400d03:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400d08:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400d0d:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400d12:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400d17:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400d1c:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400d21:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400d26:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400d2b:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400d30:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400d35:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400d3a:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400d3f:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400d44:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400d49:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400d4e:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400d53:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400d58:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400d5d:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400d62:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400d67:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400d6c:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400d71:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400d76:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400d7b:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400d80:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400d85:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400d8a:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400d8f:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400d94:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400d99:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400d9e:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400da3:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400da8:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400dad:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400db2:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400db7:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400dbc:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400dc1:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400dc6:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400dcb:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400dd0:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400dd5:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400dda:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400ddf:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400de4:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400de9:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400dee:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400df3:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400df8:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400dfd:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400e02:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400e07:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400e0c:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400e11:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400e16:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400e1b:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400e20:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400e25:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400e2a:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400e2f:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400e34:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400e39:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400e3e:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400e43:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400e48:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400e4d:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400e52:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400e57:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400e5c:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400e61:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400e66:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400e6b:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400e70:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400e75:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400e7a:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400e7f:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400e84:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400e89:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400e8e:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400e93:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400e98:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400e9d:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400ea2:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400ea7:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400eac:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400eb1:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400eb6:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400ebb:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400ec0:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400ec5:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400eca:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400ecf:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400ed4:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400ed9:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400ede:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400ee3:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400ee8:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400eed:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400ef2:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400ef7:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400efc:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400f01:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400f06:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400f0b:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400f10:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400f15:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400f1a:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400f1f:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400f24:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400f29:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400f2e:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400f33:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400f38:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400f3d:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400f42:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400f47:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400f4c:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400f51:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400f56:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400f5b:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400f60:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400f65:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400f6a:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400f6f:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400f74:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400f79:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400f7e:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400f83:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400f88:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400f8d:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400f92:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400f97:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400f9c:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400fa1:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400fa6:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400fab:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400fb0:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400fb5:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400fba:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400fbf:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400fc4:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400fc9:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400fce:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400fd3:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400fd8:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400fdd:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400fe2:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400fe7:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400fec:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400ff1:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400ff6:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  400ffb:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  401000:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  401005:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  40100a:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  40100f:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  401014:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  401019:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  40101e:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  401023:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  401028:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  40102d:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  401032:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  401037:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  40103c:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  401041:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  401046:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  40104b:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  401050:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  401055:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  40105a:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  40105f:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  401064:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  401069:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  40106e:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  401073:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  401078:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  40107d:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  401082:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  401087:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  40108c:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  401091:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  401096:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  40109b:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4010a0:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4010a5:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4010aa:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4010af:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4010b4:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4010b9:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4010be:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4010c3:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4010c8:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4010cd:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4010d2:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4010d7:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4010dc:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4010e1:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4010e6:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4010eb:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4010f0:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4010f5:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4010fa:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4010ff:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  401104:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  401109:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  40110e:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  401113:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  401118:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  40111d:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  401122:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  401127:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  40112c:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  401131:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  401136:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  40113b:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  401140:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  401145:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  40114a:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  40114f:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  401154:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  401159:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  40115e:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  401163:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  401168:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  40116d:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  401172:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  401177:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  40117c:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  401181:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  401186:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  40118b:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  401190:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  401195:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  40119a:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  40119f:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4011a4:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4011a9:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4011ae:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4011b3:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4011b8:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4011bd:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4011c2:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4011c7:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4011cc:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4011d1:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4011d6:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4011db:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4011e0:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4011e5:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4011ea:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4011ef:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4011f4:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4011f9:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4011fe:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  401203:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  401208:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  40120d:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  401212:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  401217:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  40121c:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  401221:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  401226:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  40122b:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  401230:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  401235:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  40123a:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  40123f:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  401244:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  401249:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  40124e:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  401253:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  401258:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  40125d:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  401262:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  401267:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  40126c:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  401271:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  401276:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  40127b:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  401280:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  401285:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  40128a:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  40128f:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  401294:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  401299:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  40129e:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4012a3:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4012a8:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4012ad:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4012b2:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4012b7:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4012bc:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4012c1:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4012c6:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4012cb:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4012d0:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4012d5:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4012da:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4012df:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4012e4:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4012e9:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4012ee:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4012f3:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4012f8:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4012fd:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  401302:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  401307:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  40130c:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  401311:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  401316:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  40131b:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  401320:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  401325:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  40132a:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  40132f:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  401334:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  401339:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  40133e:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  401343:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  401348:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  40134d:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  401352:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  401357:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  40135c:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  401361:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  401366:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  40136b:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  401370:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  401375:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  40137a:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  40137f:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  401384:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  401389:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  40138e:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  401393:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  401398:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  40139d:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4013a2:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4013a7:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4013ac:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4013b1:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4013b6:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4013bb:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4013c0:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4013c5:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4013ca:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4013cf:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4013d4:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4013d9:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4013de:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4013e3:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4013e8:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4013ed:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4013f2:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4013f7:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4013fc:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  401401:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  401406:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  40140b:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  401410:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  401415:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  40141a:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  40141f:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  401424:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  401429:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  40142e:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  401433:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  401438:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  40143d:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  401442:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  401447:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  40144c:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  401451:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  401456:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  40145b:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  401460:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  401465:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  40146a:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  40146f:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  401474:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  401479:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  40147e:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  401483:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  401488:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  40148d:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  401492:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  401497:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  40149c:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4014a1:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4014a6:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4014ab:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4014b0:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4014b5:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4014ba:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4014bf:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4014c4:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4014c9:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4014ce:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4014d3:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4014d8:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4014dd:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4014e2:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4014e7:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4014ec:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4014f1:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4014f6:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4014fb:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  401500:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  401505:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  40150a:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  40150f:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  401514:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  401519:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  40151e:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  401523:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  401528:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  40152d:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  401532:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  401537:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  40153c:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  401541:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  401546:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  40154b:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  401550:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  401555:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  40155a:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  40155f:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  401564:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  401569:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  40156e:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  401573:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  401578:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  40157d:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  401582:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  401587:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  40158c:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  401591:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  401596:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  40159b:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4015a0:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4015a5:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4015aa:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4015af:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4015b4:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4015b9:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4015be:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4015c3:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4015c8:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4015cd:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4015d2:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4015d7:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4015dc:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4015e1:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4015e6:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4015eb:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4015f0:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4015f5:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4015fa:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4015ff:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  401604:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  401609:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  40160e:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  401613:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  401618:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  40161d:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  401622:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  401627:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  40162c:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  401631:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  401636:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  40163b:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  401640:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  401645:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  40164a:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  40164f:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  401654:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  401659:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  40165e:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  401663:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  401668:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  40166d:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  401672:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  401677:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  40167c:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  401681:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  401686:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  40168b:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  401690:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  401695:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  40169a:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  40169f:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4016a4:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4016a9:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4016ae:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4016b3:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4016b8:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4016bd:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4016c2:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4016c7:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4016cc:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4016d1:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4016d6:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4016db:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4016e0:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4016e5:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4016ea:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4016ef:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4016f4:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4016f9:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4016fe:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  401703:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  401708:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  40170d:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  401712:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  401717:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  40171c:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  401721:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  401726:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  40172b:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  401730:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  401735:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  40173a:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  40173f:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  401744:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  401749:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  40174e:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  401753:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  401758:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  40175d:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  401762:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  401767:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  40176c:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  401771:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  401776:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  40177b:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  401780:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  401785:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  40178a:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  40178f:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  401794:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  401799:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  40179e:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4017a3:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4017a8:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4017ad:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4017b2:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4017b7:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4017bc:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4017c1:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4017c6:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4017cb:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4017d0:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4017d5:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4017da:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4017df:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4017e4:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4017e9:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4017ee:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4017f3:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4017f8:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4017fd:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  401802:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  401807:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  40180c:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  401811:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  401816:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  40181b:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  401820:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  401825:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  40182a:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  40182f:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  401834:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  401839:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  40183e:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  401843:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  401848:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  40184d:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  401852:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  401857:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  40185c:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  401861:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  401866:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  40186b:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  401870:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  401875:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  40187a:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  40187f:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  401884:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  401889:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  40188e:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  401893:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  401898:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  40189d:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4018a2:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4018a7:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4018ac:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4018b1:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4018b6:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4018bb:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4018c0:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4018c5:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4018ca:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4018cf:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4018d4:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4018d9:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4018de:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4018e3:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4018e8:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4018ed:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4018f2:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4018f7:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4018fc:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  401901:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  401906:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  40190b:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  401910:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  401915:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  40191a:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  40191f:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  401924:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  401929:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  40192e:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  401933:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  401938:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  40193d:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  401942:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  401947:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  40194c:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  401951:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  401956:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  40195b:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  401960:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  401965:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  40196a:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  40196f:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  401974:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  401979:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  40197e:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  401983:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  401988:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  40198d:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  401992:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  401997:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  40199c:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4019a1:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4019a6:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4019ab:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4019b0:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4019b5:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4019ba:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4019bf:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4019c4:	c4 e2 f9 b8 c4       	vfmadd231pd %xmm4,%xmm0,%xmm0
+  4019c9:	66 0f 7f 64 24 10    	movdqa %xmm4,0x10(%rsp)
+  4019cf:	0f 31                	rdtsc  
+  4019d1:	48 c1 e2 20          	shl    $0x20,%rdx
+  4019d5:	89 c0                	mov    %eax,%eax
+  4019d7:	48 09 d0             	or     %rdx,%rax
+  4019da:	48 c1 e7 20          	shl    $0x20,%rdi
+  4019de:	89 f6                	mov    %esi,%esi
+  4019e0:	48 09 fe             	or     %rdi,%rsi
+  4019e3:	48 29 f0             	sub    %rsi,%rax
+  4019e6:	48 01 c3             	add    %rax,%rbx
+  4019e9:	83 c1 01             	add    $0x1,%ecx
+  4019ec:	39 e9                	cmp    %ebp,%ecx
+  4019ee:	0f 85 11 ec ff ff    	jne    400605 <latency+0x48>
+  4019f4:	eb 05                	jmp    4019fb <latency+0x143e>
+  4019f6:	bb 00 00 00 00       	mov    $0x0,%ebx
+  4019fb:	48 89 de             	mov    %rbx,%rsi
+  4019fe:	bf 50 1b 40 00       	mov    $0x401b50,%edi
+  401a03:	b8 00 00 00 00       	mov    $0x0,%eax
+  401a08:	e8 73 ea ff ff       	callq  400480 <printf@plt>
+  401a0d:	48 85 db             	test   %rbx,%rbx
+  401a10:	78 07                	js     401a19 <latency+0x145c>
+  401a12:	f2 48 0f 2a c3       	cvtsi2sd %rbx,%xmm0
+  401a17:	eb 15                	jmp    401a2e <latency+0x1471>
+  401a19:	48 89 d8             	mov    %rbx,%rax
+  401a1c:	48 d1 e8             	shr    %rax
+  401a1f:	83 e3 01             	and    $0x1,%ebx
+  401a22:	48 09 d8             	or     %rbx,%rax
+  401a25:	f2 48 0f 2a c0       	cvtsi2sd %rax,%xmm0
+  401a2a:	f2 0f 58 c0          	addsd  %xmm0,%xmm0
+  401a2e:	f2 0f 59 05 3a 01 00 	mulsd  0x13a(%rip),%xmm0        # 401b70 <__dso_handle+0x28>
+  401a35:	00 
+  401a36:	f2 0f 2a cd          	cvtsi2sd %ebp,%xmm1
+  401a3a:	f2 0f 59 0d 36 01 00 	mulsd  0x136(%rip),%xmm1        # 401b78 <__dso_handle+0x30>
+  401a41:	00 
+  401a42:	f2 0f 5e c1          	divsd  %xmm1,%xmm0
+  401a46:	bf 5e 1b 40 00       	mov    $0x401b5e,%edi
+  401a4b:	b8 01 00 00 00       	mov    $0x1,%eax
+  401a50:	e8 2b ea ff ff       	callq  400480 <printf@plt>
+  401a55:	48 83 c4 38          	add    $0x38,%rsp
+  401a59:	5b                   	pop    %rbx
+  401a5a:	5d                   	pop    %rbp
+  401a5b:	c3                   	retq   
+
+0000000000401a5c <main>:
+  401a5c:	55                   	push   %rbp
+  401a5d:	53                   	push   %rbx
+  401a5e:	48 83 ec 08          	sub    $0x8,%rsp
+  401a62:	48 8b 7e 08          	mov    0x8(%rsi),%rdi
+  401a66:	ba 0a 00 00 00       	mov    $0xa,%edx
+  401a6b:	be 00 00 00 00       	mov    $0x0,%esi
+  401a70:	e8 3b ea ff ff       	callq  4004b0 <strtol@plt>
+  401a75:	48 89 c5             	mov    %rax,%rbp
+  401a78:	e8 43 ea ff ff       	callq  4004c0 <rand@plt>
+  401a7d:	89 c3                	mov    %eax,%ebx
+  401a7f:	e8 3c ea ff ff       	callq  4004c0 <rand@plt>
+  401a84:	89 c1                	mov    %eax,%ecx
+  401a86:	c1 f9 1f             	sar    $0x1f,%ecx
+  401a89:	c1 e9 19             	shr    $0x19,%ecx
+  401a8c:	8d 34 08             	lea    (%rax,%rcx,1),%esi
+  401a8f:	83 e6 7f             	and    $0x7f,%esi
+  401a92:	29 ce                	sub    %ecx,%esi
+  401a94:	89 d9                	mov    %ebx,%ecx
+  401a96:	c1 f9 1f             	sar    $0x1f,%ecx
+  401a99:	c1 e9 19             	shr    $0x19,%ecx
+  401a9c:	8d 3c 0b             	lea    (%rbx,%rcx,1),%edi
+  401a9f:	83 e7 7f             	and    $0x7f,%edi
+  401aa2:	29 cf                	sub    %ecx,%edi
+  401aa4:	89 ea                	mov    %ebp,%edx
+  401aa6:	e8 12 eb ff ff       	callq  4005bd <latency>
+  401aab:	b8 00 00 00 00       	mov    $0x0,%eax
+  401ab0:	48 83 c4 08          	add    $0x8,%rsp
+  401ab4:	5b                   	pop    %rbx
+  401ab5:	5d                   	pop    %rbp
+  401ab6:	c3                   	retq   
+  401ab7:	66 0f 1f 84 00 00 00 	nopw   0x0(%rax,%rax,1)
+  401abe:	00 00 
+
+0000000000401ac0 <__libc_csu_init>:
+  401ac0:	41 57                	push   %r15
+  401ac2:	41 89 ff             	mov    %edi,%r15d
+  401ac5:	41 56                	push   %r14
+  401ac7:	49 89 f6             	mov    %rsi,%r14
+  401aca:	41 55                	push   %r13
+  401acc:	49 89 d5             	mov    %rdx,%r13
+  401acf:	41 54                	push   %r12
+  401ad1:	4c 8d 25 38 03 20 00 	lea    0x200338(%rip),%r12        # 601e10 <__frame_dummy_init_array_entry>
+  401ad8:	55                   	push   %rbp
+  401ad9:	48 8d 2d 38 03 20 00 	lea    0x200338(%rip),%rbp        # 601e18 <__init_array_end>
+  401ae0:	53                   	push   %rbx
+  401ae1:	4c 29 e5             	sub    %r12,%rbp
+  401ae4:	31 db                	xor    %ebx,%ebx
+  401ae6:	48 c1 fd 03          	sar    $0x3,%rbp
+  401aea:	48 83 ec 08          	sub    $0x8,%rsp
+  401aee:	e8 5d e9 ff ff       	callq  400450 <_init>
+  401af3:	48 85 ed             	test   %rbp,%rbp
+  401af6:	74 1e                	je     401b16 <__libc_csu_init+0x56>
+  401af8:	0f 1f 84 00 00 00 00 	nopl   0x0(%rax,%rax,1)
+  401aff:	00 
+  401b00:	4c 89 ea             	mov    %r13,%rdx
+  401b03:	4c 89 f6             	mov    %r14,%rsi
+  401b06:	44 89 ff             	mov    %r15d,%edi
+  401b09:	41 ff 14 dc          	callq  *(%r12,%rbx,8)
+  401b0d:	48 83 c3 01          	add    $0x1,%rbx
+  401b11:	48 39 eb             	cmp    %rbp,%rbx
+  401b14:	75 ea                	jne    401b00 <__libc_csu_init+0x40>
+  401b16:	48 83 c4 08          	add    $0x8,%rsp
+  401b1a:	5b                   	pop    %rbx
+  401b1b:	5d                   	pop    %rbp
+  401b1c:	41 5c                	pop    %r12
+  401b1e:	41 5d                	pop    %r13
+  401b20:	41 5e                	pop    %r14
+  401b22:	41 5f                	pop    %r15
+  401b24:	c3                   	retq   
+  401b25:	90                   	nop
+  401b26:	66 2e 0f 1f 84 00 00 	nopw   %cs:0x0(%rax,%rax,1)
+  401b2d:	00 00 00 
+
+0000000000401b30 <__libc_csu_fini>:
+  401b30:	f3 c3                	repz retq 
+
+Disassembly of section .fini:
+
+0000000000401b34 <_fini>:
+  401b34:	48 83 ec 08          	sub    $0x8,%rsp
+  401b38:	48 83 c4 08          	add    $0x8,%rsp
+  401b3c:	c3                   	retq   

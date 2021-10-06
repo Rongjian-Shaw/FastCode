@@ -71,7 +71,7 @@ SIMDADD100(dest, src) \
 #define BASE_FREQ  2.4
 
 //number of instructions in a dependent chain
-#define NUM_INST    1.0
+#define NUM_INST    1000.0
 
 
 
